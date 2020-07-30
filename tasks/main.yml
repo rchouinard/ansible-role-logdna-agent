@@ -1,0 +1,20 @@
+---
+- name: Configure Repository
+  copy:
+    src: logdna.repo
+    dest: /etc/yum.repos.d/logdna.repo
+    mode: '0644'
+
+- name: Install Agent
+  package:
+    name: logdna-agent
+    state: present
+
+- name: Register Agent
+  command: "/usr/bin/logdna-agent -k {{ logdna_key }}"
+  when: logdna_key | length > 0
+
+- name: Fix Log Rotation
+  file:
+    path: /etc/logrotate.d/logdna-agent
+    mode: '0644'

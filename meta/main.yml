@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: rchouinard
+  description: Installs and registers LogDNA's collector agent for RHEL and Fedora systems.
+  role_name: logdna_agent
+  license: MIT
+  min_ansible_version: 2.7
+  platforms:
+  - name: Fedora
+    versions:
+    - 32
+    - 31
+  - name: EL
+    versions:
+    - 8
+    - 7
+  galaxy_tags:
+  - logdna
+  - logs
+  - monitoring
+  dependencies: []
