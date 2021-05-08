@@ -1,2 +1,24 @@
 ---
+# @var logdna_key: "" # LogDNA ingestion key
 logdna_key: ""
+
+# @var logdna_logdirs: ["/var/log"] # List of log directories to scan (supports globs)
+logdna_logdirs: [ "/var/log" ]
+
+# @var logdna_logfiles: [] # List of log files to scan
+logdna_logfiles: []
+
+# @var logdna_excludes: [] # List of log files to exclude
+logdna_excludes: []
+
+# @var logdna_excludes_regex: [] # List of regexes used to filter log lines
+logdna_excludes_regex: []
+
+# @var logdna_hostname: "" # Alternative hostname to report
+logdna_hostname: ""
+
+# @var logdna_tags: [] # List of host tags
+logdna_tags: []
+
+# @var logdna_start_service: yes # Start the service?
+logdna_start_service: yes

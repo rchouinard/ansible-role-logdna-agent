@@ -7,12 +7,41 @@
 
 - name: Install Agent
   package:
-    name: logdna-agent
+    name:
+    - chkconfig
+    - logdna-agent
     state: present
 
-- name: Register Agent
-  command: "/usr/bin/logdna-agent -k {{ logdna_key }}"
-  when: logdna_key | length > 0
+- name: Configure Agent
+  command: >-
+    /usr/bin/logdna-agent
+    {% if logdna_key -%}
+      --key {{ logdna_key | quote }}
+    {% endif %}
+    {% if logdna_hostname -%}
+      --hostname {{ logdna_hostname | quote }}
+    {% endif %}
+    {% if logdna_logdirs -%}
+      {% for logdir in logdna_logdirs %}--logdir {{ logdir | quote }} {% endfor %}
+    {% endif %}
+    {% if logdna_logfiles -%}
+      {% for logfile in logdna_logfiles %}--logfile {{ logfile | quote }} {% endfor %}
+    {% endif %}
+    {% if logdna_excludes -%}
+      {% for exclude in logdna_excludes %}--exclude {{ exclude | quote }} {% endfor %}
+    {% endif %}
+    {% if logdna_excludes_regex -%}
+      {% for exclude_regex in logdna_excludes_regex %}--exclude-regex {{ exclude_regex | quote }} {% endfor %}
+    {% endif %}
+    {% if logdna_tags -%}
+      {% for tag in logdna_tags %}--tags {{ tag | quote }} {% endfor %}
+    {% endif %}
+
+- name: Start Agent
+  service:
+    name: logdna-agent
+    state: started
+  when: logdna_start_service
 
 - name: Fix Log Rotation
   file:
